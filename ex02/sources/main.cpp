@@ -1,31 +1,20 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ncarvalh <ncarvalh@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/22 21:10:10 by ncarvalh          #+#    #+#             */
-/*   Updated: 2023/09/22 21:21:37 by ncarvalh         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "../includes/Array.hpp"
+#include "../includes/tests.hpp"
 
-#include "Array.hpp"
-
-void testDefaultConstructor(void)
+void testDefaultConstructor(int test)
 {
-	std::cout << GREEN << "\n\t ======= Testing Array Default Constructor =======\n\n" << RESET;
-	
+	SHOW(SBLUE << test << " - Testing Array Default Constructor" << SRESET);
+
 	Array<int> numbers(10);
 
 	for (size_t i = 0; i < numbers.size(); i++)
 		std::cout << "numbers[" << i << "] = " << numbers[i] << std::endl;
 }
 
-void testCopyConstructor(void)
+void testCopyConstructor(int test)
 {
-	std::cout << GREEN << "\n\t ======= Testing Array Copy Constructor =======\n\n" << RESET;
-	
+	SHOW(SBLUE << test << " - Test Array Copy Constructor " << SRESET);
+
 	Array<int> numbers(10);
 	Array<int> copy(5);
 
@@ -38,47 +27,53 @@ void testCopyConstructor(void)
 		std::cout << "copy[" << i << "] = " << copy[i] << std::endl;
 }
 
-void testOutOfBoundsIndexes(void)
+void testOutOfBoundsIndexes(int test)
 {
-	std::cout << GREEN << "\n\t ======= Testing Array Invalid Index =======\n\n" << RESET;
+	SHOW(SBLUE << test << " - Test Array Invalid Index " << SRESET);
 	Array<int> numbers(10);
-	
+
 	try
 	{
 		numbers[-1] = 0;
 	}
 	catch (const std::exception &e)
 	{
-		std::cout << RED << e.what() << RESET << '\n';
+		std::cout << SRED << e.what() << SRESET << '\n';
 	}
-	
+
 	try
 	{
 		numbers[10] = 0;
 	}
 	catch (const std::exception &e)
 	{
-		std::cout << RED << e.what() << RESET << '\n';
+		std::cout << SRED << e.what() << SRESET << '\n';
 	}
 }
 
 int main(int argc, char **argv)
 {
-	int					testno;
+	int					test;
 	std::stringstream	stream;
 
 	if (argc < 2)
-		return (ERROR_USAGE(argv[0]), 1);
+		return (E_USE(argv[0]), 1);
 	stream << argv[1];
-	if (!(stream >> testno))
-		return (ERROR_NOT_INT, 1);
-	if (testno < 0 || testno > 2)
-		return (ERROR_TESTNO, 1);
-	if (testno == 0)
-		testDefaultConstructor();
-	else if (testno == 1)
-		testCopyConstructor();
+	if (!(stream >> test))
+		return (E_NO_INT, 1);
+	if (test < 0 || test > 3)
+		return (E_LIMITS, 1);
+	if (test == 0)
+		testDefaultConstructor(test);
+	else if (test == 1)
+		testCopyConstructor(test);
+	else if (test == 2)
+		testOutOfBoundsIndexes(test);
 	else
-		testOutOfBoundsIndexes();
+	{
+		testDefaultConstructor(test);
+		testCopyConstructor(test);
+		testOutOfBoundsIndexes(test);
+	}
 	return 0;
 }

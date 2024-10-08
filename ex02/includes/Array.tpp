@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Array.tpp                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ncarvalh <ncarvalh@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/01 17:50:19 by ncarvalh          #+#    #+#             */
-/*   Updated: 2023/09/22 21:07:20 by ncarvalh         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "Array.hpp"
 
 template <class T>
@@ -30,7 +18,7 @@ template <class T>
 Array<T>::Array(const Array& copy)
 {
 	this->array = NULL;
-	*this = copy;	
+	*this = copy;
 }
 
 template <class T>

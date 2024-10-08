@@ -1,66 +1,64 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ncarvalh <ncarvalh@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/01 17:03:13 by ncarvalh          #+#    #+#             */
-/*   Updated: 2023/09/23 11:24:42 by ncarvalh         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "iter.hpp"
+#include "../includes/tests.hpp"
 
-/* ________________________ TESTS ________________________ */
-
-void testIntegerArray(void)
+void testIntegers(int test)
 {
-	std::cout << GREEN << "\n\t =============== TEST INTEGERS ===============\n\n" << RESET;
-	
-	int array[] = {1, 2, 3, 4, 5, 42, -1, 0};
-	iter(array, sizeof(array)/sizeof(int), &print);	
+	SHOW(SBLUE << test << " - Test Integers" << SRESET);
+
+	int array[] = {101, 202, 33, 44, 43, 42, -10, 92};
+	iter(array, sizeof(array)/sizeof(int), &print);
 }
 
-void testStringArray(void)
+void testStrings(int test)
 {
-	std::cout << GREEN << "\n\t =============== TEST STRINGS ===============\n\n" << RESET;
-	
-	std::string array[] = 
+	SHOW(SBLUE << test << " - Test Strings" << SRESET);
+
+	std::string array[] =
 	{
-		"Nuno",
-		"Miguel",
-		"Carvalho",
-		"Jesus",
+		"Marte",
+		"Jupiter",
+		"Saturno",
+		"Neptuno",
+		"Urano",
+		"Venus",
+		"Terra",
+		"Mercurio"
+		"Pluton"
 	};
-	iter(array, sizeof(array)/sizeof(std::string), &print);	
+	iter(array, sizeof(array)/sizeof(std::string), &print);
 }
 
-void testAlphabet(void)
-{	
-	std::cout << GREEN << "\n\t =============== TEST ALPHABET ===============\n\n" << RESET;
-	
+void testAlphaChars(int test)
+{
+	SHOW(SBLUE << test << " - Test Alphabet" << SRESET);
+
 	char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	iter(alphabet, sizeof(alphabet), &print);
 }
 
 int main(int argc, char **argv)
 {
-	int					testno;
+	int					test;
 	std::stringstream	stream;
 
 	if (argc < 2)
-		return (ERROR_USAGE(argv[0]), 1);
+		return (E_USE(argv[0]), 1);
 	stream << argv[1];
-	if (!(stream >> testno))
-		return (ERROR_NOT_INT, 1);
-	if (testno < 0 || testno > 2)
-		return (ERROR_TESTNO, 1);
-	if (testno == 0)
-		testIntegerArray();
-	else if (testno == 1)
-		testStringArray();
+	if (!(stream >> test))
+		return (E_NO_INT, 1);
+	if (test < 0 || test > 3)
+		return (E_LIMITS, 1);
+	if (test == 0)
+		testIntegers(test);
+	else if (test == 1)
+		testStrings(test);
+	else if (test == 2)
+		testAlphaChars(test);
 	else
-		testAlphabet();
+	{
+		testIntegers(test);
+		testStrings(test);
+		testAlphaChars(test);
+	}
 	return (0);
 }
