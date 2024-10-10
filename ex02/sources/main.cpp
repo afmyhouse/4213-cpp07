@@ -5,35 +5,37 @@
 
 void testVoidConstructor(int test)
 {
-	SHOW(SBLUE << test << " - Testing Array Void Constructor" << SRESET);
+	SHOW(SBLUE << std::endl << test << " - Testing Array Void Constructor" << SRESET);
 
-	Array<int> numbers;
+	Array<int> original;
 
 	std::srand(time(0));
-	for (size_t i = 0; i < numbers.size(); i++)
-		numbers[i] = std::rand() % 100;
-	for (size_t i = 0; i < numbers.size(); i++)
-		std::cout << "numbers[" << i << "] = " << numbers[i] << std::endl;
-	std::cout << "numbers.size() = " << numbers.size() << std::endl;
-	std::cout << "Array & " << &numbers << std::endl;
+	for (size_t i = 0; i < original.size(); i++)
+		original[i] = std::rand() % 100;
+	for (size_t i = 0; i < original.size(); i++)
+		std::cout << "original[" << i << "] = " << original[i] << std::endl;
+	std::cout << "original.size() = " << original.size() << std::endl;
+	std::cout << "Array & " << &original << std::endl;
 }
 
 void testParametricConstructor(int test)
 {
-	SHOW(SBLUE << test << " - Testing Array Parametric Constructor" << SRESET);
+	SHOW(SBLUE << std::endl << test << " - Testing Array Parametric Constructor" << SRESET);
 
-	Array<int> numbers(10);
+	Array<int> original(10);
 
 	std::srand(time(0));
-	for (size_t i = 0; i < numbers.size(); i++)
-		numbers[i] = std::rand() % 100;
-	for (size_t i = 0; i < numbers.size(); i++)
-		std::cout << "numbers[" << i << "] = " << numbers[i] << std::endl;
+	for (size_t i = 0; i < original.size(); i++)
+		original[i] = std::rand() % 100;
+	for (size_t i = 0; i < original.size(); i++)
+		std::cout << "original[" << i << "] = " << original[i] << std::endl;
+	std::cout << "original.size() = " << original.size() << std::endl;
+	std::cout << "Array & " << &original << std::endl;
 }
 
 void testCopyConstructor(int test)
 {
-	SHOW(SBLUE << test << " - Test Array Copy Constructor" << SRESET);
+	SHOW(SBLUE << std::endl << test << " - Test Array Copy Constructor" << SRESET);
 
 	Array<int> original(10);
 
@@ -46,11 +48,16 @@ void testCopyConstructor(int test)
 	Array<int> aCopy(original);
 	for (size_t i = 0; i < aCopy.size(); i++)
 		std::cout << "copy[" << i << "] = " << aCopy[i] << std::endl;
+
+	std::cout << "original.size() = " << original.size() << std::endl;
+	std::cout << "Array & " << &original << std::endl;
+	std::cout << "aCopy.size() = " << aCopy.size() << std::endl;
+	std::cout << "Array & " << &aCopy << std::endl;
 }
 
 void testAssignConstructor(int test)
 {
-	SHOW(SBLUE << test << " - Test Array Assigment Constructor " << SRESET);
+	SHOW(SBLUE << std::endl << test << " - Test Array Assigment Constructor " << SRESET);
 
 	Array<int> original(10);
 
@@ -63,11 +70,16 @@ void testAssignConstructor(int test)
 	Array<int> aCopy = original;
 	for (size_t i = 0; i < aCopy.size(); i++)
 		std::cout << "copy[" << i << "] = " << aCopy[i] << std::endl;
+
+	std::cout << "original.size() = " << original.size() << std::endl;
+	std::cout << "Array & " << &original << std::endl;
+	std::cout << "aCopy.size() = " << aCopy.size() << std::endl;
+	std::cout << "Array & " << &aCopy << std::endl;
 }
 
 void testComplexConstructor(int test)
 {
-	SHOW(SBLUE << test << " - Testing Complex Array Constructor" << SRESET);
+	SHOW(SBLUE << std::endl << test << " - Testing Complex Array Constructor" << SRESET);
 	const char* stars[] = {"Cygni", "Struve", "Groombridge", "Lalande", "Keid", "Kapteyn", "Kruger", "Ross"};
 	const char* planets[] = {"Marte", "Jupiter", "Saturno", "Neptuno", "Urano", "Venus", "Terra", "Mercurio", "Pluton"};
 	const char* constellations[] = {"Andromeda", "Cassiopeia", "Orion", "Ursa Major", "Ursa Minor", "Draco", "Lyra", "Cygnus"};
@@ -100,6 +112,15 @@ void testComplexConstructor(int test)
 		for (size_t j = 0; j < nearSpace[i].size(); j++)
 			std::cout << "nearSpace[" << i << "][" << j << "] = " << nearSpace[i][j] << std::endl;
 	}
+
+	std::cout << "aPlanets.size() = " << aPlanets.size() << std::endl;
+	std::cout << "Array & " << &aPlanets << std::endl;
+	std::cout << "aStars.size() = " << aStars.size() << std::endl;
+	std::cout << "Array & " << &aStars << std::endl;
+	std::cout << "aConstellations.size() = " << aConstellations.size() << std::endl;
+	std::cout << "Array & " << &aConstellations << std::endl;
+	std::cout << "nearSpace.size() = " << nearSpace.size() << std::endl;
+	std::cout << "Array & " << &nearSpace << std::endl;
 }
 void testInvalidAccess(int test)
 {
@@ -108,6 +129,7 @@ void testInvalidAccess(int test)
 
 	try
 	{
+		std::cout <<"Try to access element [-1]/[0..9]" << std::endl;
 		numbers[-1] = 0;
 	}
 	catch (const std::exception &e)
@@ -117,6 +139,7 @@ void testInvalidAccess(int test)
 
 	try
 	{
+		std::cout <<"Try to access element [10]/[0..9]" << std::endl;
 		numbers[10] = 0;
 	}
 	catch (const std::exception &e)
