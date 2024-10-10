@@ -1,3 +1,4 @@
+// many errors are expected in this file
 #include "../includes/Array.hpp"
 #include "../includes/Array.tpp"
 #include "../includes/tests.hpp"
