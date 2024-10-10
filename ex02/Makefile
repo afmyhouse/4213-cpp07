@@ -1,67 +1,111 @@
-#_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_ COLORS _/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_
-RESET	= \033[0m
-BLACK 	= \033[1;30m
-RED 	= \033[1;31m
-GREEN 	= \033[1;32m
-YELLOW 	= \033[1;33m
-BLUE	= \033[1;34m
-PURPLE 	= \033[1;35m
-CYAN 	= \033[1;36m
-WHITE 	= \033[1;37m
-
-#_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_ COMMANDS _/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_
+# compilation, linking and cleaning commands/flags
 CXX = c++
-RM = rm -rf
+CXXWARNS = -Wextra -Werror -Wall
+CXXRESTR = -std=c++98
+CXXDEBUG = -ggdb
+CXXFLAGS = $(CXXWARNS) $(CXXRESTR) $(CXXDEBUG)
+MKF = --no-print-directory
 AR = ar -rcs
+RM = rm -rf
 
-#_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_ FLAGS _/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_
-CPPFLAGS	= -Wall -Wextra -Werror -pedantic -std=c++98
-MKFLAGS		= --no-print-directory
+# sources, objects and includes folders
+SRCSD = sources/
+INCSD = includes/
+SUBSD = ./
+OBJSD = build/
+VPATH = $(SRCSD) $(addprefix $(SRCSD), $(SUBSD))
 
-#_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_ FOLDERS _/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_
-DEPS			= ./includes
-SRCS			= ./sources
-_SUBFOLDERS		= 
-VPATH			= $(SRCS) $(addprefix $(SRCS)/, $(_SUBFOLDERS))
-BINS			= bin
+# files
+NAME = $(shell basename $(CURDIR))
+FILES = main
+# FILES +=
+OBJS = $(FILES:%=%.o)
+TARGET = $(addprefix $(OBJSD), $(OBJS))
 
-#_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_ FILES _/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_
-NAME			= ex02
-_FILES			= main
-OBJS			= $(_FILES:%=%.o)
-TARGET			= $(addprefix $(BINS)/, $(OBJS))
+# valgrind
+LEAKS = valgrind
+LEAKS_FILE = valgrind-log.txt
+LF = --leak-check=full \
+	 --show-leak-kinds=all \
+	 --track-origins=yes \
+	 --verbose \
+	 --log-file=$(LEAKS_FILE) \
+	 ./$(NAME)
 
-#_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_ RULES _/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_/=\_
+# colors
+GRN = \e[38;5;118m
+YLW = \e[38;5;226m
+RED = \e[38;5;196m
+BLU = \e[38:5:31m
+CYN = \33[1;36m
+WHT = \e[0m
+RESET = \033[0m
+BOLD = \033[1m
+
+# predefine user messages
+_INFO		= $(WHT)[$(CYN)INFO $(WHT)]
+_SUCCESS	= $(WHT)[$(GRN)$(BOLD)READY$(WHT)]
+_WARNING	= $(WHT)[$(YLW)WARNING$(WHT)]
+_ERROR 		= $(WHT)[$(RED)ERROR$(WHT)]
+
+# rules
 all: $(NAME)
+	@printf "\n $(_SUCCESS) $(BOLD)$(NAME)$(RESET) executable ready!\n\n"
 
-$(NAME): $(BINS) $(TARGET)
-	echo "[$(CYAN) Linking $(RESET)] $(GREEN)*$(RESET)"
+$(NAME): $(OBJSD) $(TARGET)
+	@printf "\n $(_SUCCESS) $(BOLD)$(NAME)$(RESET) objects ready! \n"
+	@printf "\n $(_INFO) Linking $(BOLD)$(NAME)$(RESET) executable...\n "
+	$(CXX) $(CXXFLAGS) $(CXXDEBUG) $(TARGET) -o $@ -I $(INCSD)
+	@printf "$(GRN)█$(RESET)"
 
-	$(CXX) $(CPPFLAGS) $(TARGET) -o $(NAME) -I $(DEPS)
-	echo "$(GREEN)Done.$(RESET)"
+$(OBJSD)%.o: $(SRCSD)%.cpp
+	$(CXX) $(CXXFLAGS) $(CXXDEBUG) -c $< -o $@ -I $(INCSD)
+	@printf "$(YLW)█$(RESET)"
 
-$(BINS)/%.o : %.cpp
-	echo "[$(CYAN)Compiling$(RESET)] $(CPPFLAGS) $(GREEN)$<$(RESET)"
-	$(CXX) $(CPPFLAGS) -c $< -o $@ -I $(DEPS)
+$(OBJSD):
+	@printf "\n $(_INFO) $(BOLD)$(OBJSD)$(RESET) directory created.\n"
+	@mkdir -p $(OBJSD)
+	@printf "\n $(_INFO) Compiling source files...$(WTH)\n "
 
-$(BINS):
-	mkdir -p $(BINS)
+leaks:
+	@printf "\n$(_INFO) $(CYN)Running $(BOLD)$(LEAKS)$(RESET) on $(BOLD)$(NAME)$(RESET)...\n"
+	@$(LEAKS) $(LF)
+	@printf "\n$(_SUCCESS) $(BOLD)$(LEAKS)$(RESET) completed.\n"
 
 clean:
-	echo "[$(RED) Deleted $(RESET)] $(GREEN)$(BINS)$(RESET)"
-	$(RM) $(BINS)
+	@printf "\n$(_INFO) Cleaning objects and $(BOLD)$(OBJSD)$(RESET) directory...\n"
+	@$(RM) -rf $(OBJS)
+	@$(RM) -rf $(OBJSD)
+	@printf "$(_SUCCESS) All $(BOLD)$(NAME)$(WHT) objects files removed!$(WTH)\n"
+	@printf "$(_SUCCESS) $(BOLD)$(OBJSD)$(RESET) directory cleaned.\n"
+	@printf "$(_SUCCESS) $(BOLD)$(OBJSD)$(RESET) directory removed.\n\n"
 
 fclean: clean
-	echo "[$(RED) Deleted $(RESET)] $(GREEN)$(NAME)$(RESET)"
-	$(RM) $(NAME)
+	@printf "\n$(_INFO) Cleaning $(BOLD)$(NAME)$(RESET) executable...\n"
+	@$(RM) $(NAME)
+	@printf "$(_SUCCESS) $(BOLD)$(NAME)$(RESET) executable removed.\n\n"
+
+cleanleaks:
+	@printf "\n$(_INFO) Cleaning $(BOLD)$(LEAKS_FILE)$(RESET) file...\n"
+	@$(RM) $(LEAKS_FILE)
+	@printf "$(_SUCCESS) $(BOLD)$(LEAKS_FILE)$(RESET) file removed.\n\n"
 
 re: fclean all
 
-run: re
-	./$(NAME)
+show:
+	@printf "\n"
+	@printf "$(YLW)ALL PATHS (*invoked with > make show*) $(WTH)]\n"
+	@printf "\n"
+	@printf "$(YLW)██ Current directory    : $(WTH)$(CURDIR) $(WTH)\n"
+	@printf "$(RED)██ Sources directory    : $(WTH)./$(SRCSD)$(WTH)\n"
+	@printf "$(YLW)██ Include directory    : $(WTH)./$(INCSD)\n"
+	@printf "$(CYN)██ Objects Directory    : $(WTH)./$(OBJSD)$(WTH)\n"
+	@printf "$(YLW)██ Executable directory : $(WTH)$(CURDIR) $(WTH)\n"
+	@printf "\n"
+	@printf "$(RED)██ Sources files        : $(WTH)$(notdir $(FILES))\n"
+	@printf "$(CYN)██ Objects files        : $(WTH)$(notdir $(OBJS))\n"
+	@printf "$(YLW)██ Executable file      : $(WTH)$(notdir $(NAME))\n"
+	@printf "\n"
 
-leaks: re
-	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
-
+.PHONY: all leaks clean fclean cleanleaks re show
 .SILENT:
-

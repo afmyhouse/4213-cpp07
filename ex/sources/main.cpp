@@ -1,8 +1,5 @@
-// many errors are expected in this file
 #include "../includes/Array.hpp"
-#include "../includes/Array.tpp"
 #include "../includes/tests.hpp"
-
 
 void testDefaultConstructor(int test)
 {
@@ -72,11 +69,12 @@ int main(int argc, char **argv)
 		testCopyConstructor(test);
 	else if (test == 2)
 		testOutOfBoundsIndexes(test);
-	else
+	else if (test == 3)
 	{
 		testDefaultConstructor(test);
 		testCopyConstructor(test);
 		testOutOfBoundsIndexes(test);
 	}
+
 	return 0;
 }
