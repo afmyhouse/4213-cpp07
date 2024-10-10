@@ -25,6 +25,7 @@ class Array
 		Array& operator=(const Array& right);
 		T& operator[](unsigned int index);
 
+	//! Exception handling for out-of-bounds access
 	class IndexOutOfBoundsException : public std::exception
 	{
 		public:

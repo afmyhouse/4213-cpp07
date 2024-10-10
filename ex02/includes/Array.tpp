@@ -1,21 +1,8 @@
 #include "Array.hpp"
-/*
-REMARKS
-Default Constructor Initialization: In the default constructor, i'm allocating
-an array of size 0, which is technically fine but unnecessary.
-I could simply set the pointer to NULL for clarity.
 
 template <class T>
 Array<T>::Array() : array(NULL), n(0)
 {
-}
-*/
-
-//! Default constructor
-template <class T>
-Array<T>::Array() : n(0)
-{
-	this->array = new T[0];
 }
 
 //! Parameterized constructor
@@ -24,7 +11,7 @@ Array<T>::Array(unsigned int n) : n(n)
 {
 	this->array = new T[this->n];
 	for (unsigned int i = 0; i < this->n; i++)
-		this->array[i] = T();   // Default construct each element
+		this->array[i] = T();
 }
 
 //! Copy constructor
@@ -70,7 +57,7 @@ Array<T>& Array<T>::operator =(const Array<T>& right)
 template <class T>
 T& Array<T>::operator [](unsigned int index)
 {
-	if (index >= this->n) //* unsigned int is never < 0
+	if (index >= this->n)
 		throw Array<T>::IndexOutOfBoundsException();
 	return (this->array[index]);
 }

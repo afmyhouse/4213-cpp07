@@ -129,7 +129,7 @@ void testInvalidAccess(int test)
 
 	try
 	{
-		std::cout <<"Try to access element [-1]/[0..9]" << std::endl;
+		std::cout <<"Try to WRITE access element [-1]/[0..9]" << std::endl;
 		numbers[-1] = 0;
 	}
 	catch (const std::exception &e)
@@ -139,8 +139,28 @@ void testInvalidAccess(int test)
 
 	try
 	{
-		std::cout <<"Try to access element [10]/[0..9]" << std::endl;
+		std::cout <<"Try to READ access element [-1]/[0..9]" << std::endl;
+		std::cout << "numbers[-1] = " << numbers[-1] << std::endl;
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << SRED << e.what() << SRESET << '\n';
+	}
+
+	try
+	{
+		std::cout <<"Try to WRITE access element [10]/[0..9]" << std::endl;
 		numbers[10] = 0;
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << SRED << e.what() << SRESET << '\n';
+	}
+
+	try
+	{
+		std::cout <<"Try to READ access element [10]/[0..9]" << std::endl;
+		std::cout << "numbers[-1] = " << numbers[10] << std::endl;
 	}
 	catch (const std::exception &e)
 	{
