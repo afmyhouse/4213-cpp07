@@ -20,7 +20,7 @@
 
 # define TESTNUM	3
 
-# define E_MSG(x) 		std::cout << x << std::endl
+# define E_MSG(x) 	std::cout << x << std::endl
 # define E_USE(e)	E_MSG("How to use: " << e << " test_number (0 .. " << TESTNUM << ")")
 # define E_NO_INT	E_MSG("Error: test number > use a NUMBER!!!")
 # define E_LIMITS	E_MSG("Error: test number > choose one between 0 and " << TESTNUM)

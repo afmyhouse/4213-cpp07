@@ -1,7 +1,6 @@
 #ifndef ARRAY_HPP
 # define ARRAY_HPP
 
-# include "Array.tpp"
 # include <iostream>
 # include <sstream>
 
@@ -31,8 +30,8 @@ class Array
 		public:
 			virtual const char* what() const throw();
 	};
-
 };
 
+# include "Array.tpp"
 
 #endif

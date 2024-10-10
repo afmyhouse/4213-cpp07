@@ -5,14 +5,14 @@
 # include <sstream>
 
 template <class T>
-void iter(T *array, int len, void (*f)(T&))
+void iter(T *array, const size_t len, void (*f)(const T&))
 {
-	for (int i = 0; i < len; i++)
+	for (size_t i = 0; i < len; i++)
 		(*f)(array[i]);
 }
 
 template <class T>
-void print(T& val)
+void print(const T& val)
 {
 	std::cout << val << std::endl;
 }

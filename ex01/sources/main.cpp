@@ -1,6 +1,22 @@
 #include "iter.hpp"
 #include "../includes/tests.hpp"
 
+
+class SomeArray
+{
+	public:
+		SomeArray( void ) : _n( 7 ) { return; }
+		int get( void ) const { return this->_n; }
+	private:
+		int _n;
+};
+
+std::ostream & operator<<( std::ostream & out, SomeArray const & Awe )
+{
+	out << Awe.get();
+	return out;
+}
+
 void testIntegers(int test)
 {
 	SHOW(SBLUE << test << " - Test Integers" << SRESET);
@@ -13,7 +29,7 @@ void testStrings(int test)
 {
 	SHOW(SBLUE << test << " - Test Strings" << SRESET);
 
-	std::string array[] =
+	std::string sArray[] =
 	{
 		"Marte",
 		"Jupiter",
@@ -22,18 +38,26 @@ void testStrings(int test)
 		"Urano",
 		"Venus",
 		"Terra",
-		"Mercurio"
+		"Mercurio",
 		"Pluton"
 	};
-	iter(array, sizeof(array)/sizeof(std::string), &print);
+	iter(sArray, sizeof(sArray)/sizeof(std::string), &print);
 }
 
 void testAlphaChars(int test)
 {
 	SHOW(SBLUE << test << " - Test Alphabet" << SRESET);
 
-	char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	iter(alphabet, sizeof(alphabet), &print);
+	char cArray[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	iter(cArray, sizeof(cArray) - 1, print<const char>);
+}
+
+void testClassArray(int test)
+{
+	SHOW(SBLUE << test << " - Test Class Array" << SRESET);
+
+	SomeArray classArray[5];
+	iter(classArray, 5, &print);
 }
 
 int main(int argc, char **argv)
@@ -46,7 +70,7 @@ int main(int argc, char **argv)
 	stream << argv[1];
 	if (!(stream >> test))
 		return (E_NO_INT, 1);
-	if (test < 0 || test > 3)
+	if (test < 0 || test > 4)
 		return (E_LIMITS, 1);
 	if (test == 0)
 		testIntegers(test);
@@ -54,11 +78,16 @@ int main(int argc, char **argv)
 		testStrings(test);
 	else if (test == 2)
 		testAlphaChars(test);
+	else if (test == 3)
+	{
+		testClassArray(test);
+	}
 	else
 	{
 		testIntegers(test);
 		testStrings(test);
 		testAlphaChars(test);
+		testClassArray(test);
 	}
 	return (0);
 }

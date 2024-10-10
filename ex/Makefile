@@ -17,8 +17,8 @@ VPATH = $(SRCSD) $(addprefix $(SRCSD), $(SUBSD))
 
 # files
 NAME = $(shell basename $(CURDIR))
-FILES =  main
-#FILES +=
+FILES = main
+# FILES +=
 OBJS = $(FILES:%=%.o)
 TARGET = $(addprefix $(OBJSD), $(OBJS))
 

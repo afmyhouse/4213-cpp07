@@ -18,7 +18,7 @@
 # define SBLUE	"\033[1;34m"
 # define SRESET	"\033[0m"
 
-# define TESTNUM	3
+# define TESTNUM	4
 
 # define E_MSG(x) 		std::cout << x << std::endl
 # define E_USE(e)	E_MSG("How to use: " << e << " test_number (0 .. " << TESTNUM << ")")
