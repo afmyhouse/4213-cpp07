@@ -7,12 +7,12 @@ class SomeClass
 		SomeClass(void) : _n(0) {}
 		SomeClass( int n ) : _n( n ) {}
 		SomeClass & operator= (SomeClass & a) { _n = a._n; return *this; }
-		bool operator==( SomeClass const & rhs ) const { return (this->_n == rhs._n); }
-		bool operator!=( SomeClass const & rhs ) const{ return (this->_n != rhs._n); }
-		bool operator>( SomeClass const & rhs ) const { return (this->_n > rhs._n); }
-		bool operator<( SomeClass const & rhs ) const { return (this->_n < rhs._n); }
-		bool operator>=( SomeClass const & rhs ) const { return (this->_n >= rhs._n); }
-		bool operator<=( SomeClass const & rhs ) const { return (this->_n <= rhs._n); }
+		bool operator==( SomeClass const & src ) const { return (this->_n == src._n); }
+		bool operator!=( SomeClass const & src ) const{ return (this->_n != src._n); }
+		bool operator>( SomeClass const & src ) const { return (this->_n > src._n); }
+		bool operator<( SomeClass const & src ) const { return (this->_n < src._n); }
+		bool operator>=( SomeClass const & src ) const { return (this->_n >= src._n); }
+		bool operator<=( SomeClass const & src ) const { return (this->_n <= src._n); }
 		int get_n() const { return _n; }
 	private:
 		int _n;
