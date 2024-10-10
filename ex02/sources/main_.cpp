@@ -16,7 +16,7 @@ void testDefaultConstructor(int test)
 
 void testCopyConstructor(int test)
 {
-	SHOW(SBLUE << test << " - Test Array Copy Constructor " << SRESET);
+	SHOW(SBLUE << test << " - Test Array Constructor and Array copy" << SRESET);
 
 	Array<int> numbers(10);
 	Array<int> copy(5);
@@ -30,7 +30,7 @@ void testCopyConstructor(int test)
 		std::cout << "copy[" << i << "] = " << copy[i] << std::endl;
 }
 
-void testOutOfBoundsIndexes(int test)
+void testInvalidAccess(int test)
 {
 	SHOW(SBLUE << test << " - Test Array Invalid Index " << SRESET);
 	Array<int> numbers(10);
@@ -71,12 +71,12 @@ int main(int argc, char **argv)
 	else if (test == 1)
 		testCopyConstructor(test);
 	else if (test == 2)
-		testOutOfBoundsIndexes(test);
+		testInvalidAccess(test);
 	else
 	{
 		testDefaultConstructor(test);
 		testCopyConstructor(test);
-		testOutOfBoundsIndexes(test);
+		testInvalidAccess(test);
 	}
 	return 0;
 }
