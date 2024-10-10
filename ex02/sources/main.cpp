@@ -1,8 +1,7 @@
 #include "../includes/Array.hpp"
 #include "../includes/tests.hpp"
 
-// Test function to demonstrate functionality
-
+// Test functions to demonstrate functionality
 void testVoidConstructor(int test)
 {
 	SHOW(SBLUE << std::endl << test << " - Testing Array Void Constructor" << SRESET);
@@ -106,7 +105,6 @@ void testComplexConstructor(int test)
 	nearSpace[1] = aStars;
 	nearSpace[2] = aConstellations;
 
-	// Show nearSpace contents
 	for (size_t i = 0; i < nearSpace.size(); i++)
 	{
 		for (size_t j = 0; j < nearSpace[i].size(); j++)

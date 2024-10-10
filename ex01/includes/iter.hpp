@@ -2,7 +2,6 @@
 # define ITER_HPP
 
 # include <iostream>
-# include <sstream>
 
 template <class T>
 void iter(T *array, const size_t len, void (*f)(const T&))

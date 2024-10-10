@@ -2,7 +2,6 @@
 # define TESTS_HPP
 
 # include <iostream>
-# include <cstdlib>
 # include <sstream>
 
 # define MYDEBUG

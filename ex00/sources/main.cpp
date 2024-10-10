@@ -1,4 +1,5 @@
 #include "../includes/whatever.hpp"
+#include <iostream>
 
 class SomeClass
 {
@@ -41,7 +42,7 @@ int main(void)
 	}
 
 	std::cout << "===== complex arguments like Classes =====" << std::endl;
-	
+
 	{
 		SomeClass a(2), b(4);
 
